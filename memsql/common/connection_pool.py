@@ -157,8 +157,8 @@ class _PoolConnectionFairy(object):
         self._conn = None
         try:
             conn = self._pool._connections[self._key].get_nowait()
-            if self.__wrap_errors(conn.connected)():
-                self._conn = conn
+            self.__wrap_errors(conn.query)("SELECT 1")
+            self._conn = conn
         except (queue.Empty, PoolConnectionException):
             pass
 
